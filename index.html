@@ -22,6 +22,19 @@
     </style>
 </head>
 <body>
-    <iframe src="https://gamma.app/embed/sghjimdt348aodp" allow="fullscreen" title="עולם הכלבים"></iframe>
+    <iframe id="slides" src="https://gamma.app/embed/sghjimdt348aodp" allow="fullscreen" title="עולם הכלבים"></iframe>
+
+    <script>
+        // Dynamically resize the iframe on window resize
+        function resizeIframe() {
+            const iframe = document.getElementById('slides');
+            iframe.style.width = window.innerWidth + 'px';
+            iframe.style.height = window.innerHeight + 'px';
+        }
+
+        // Call the function on page load and window resize
+        window.addEventListener('resize', resizeIframe);
+        window.addEventListener('load', resizeIframe);
+    </script>
 </body>
 </html>
