@@ -3,91 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Full-Screen Slides</title>
+    <title>Full-Screen Slides</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow: hidden; /* Prevent scrolling */
             height: 100%;
         }
-        .slide-container {
+        iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f4f4f9;
-        }
-        .slide {
-            max-width: 100%;
-            max-height: 100%;
-            text-align: center;
-            font-size: 24px;
+            border: none;
         }
         .button-container {
             position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            top: 20px;
+            right: 20px;
             z-index: 10;
         }
-        .nav-button {
+        .fullscreen-button {
             background-color: #007bff;
             color: white;
             border: none;
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            margin: 0 5px;
             border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .nav-button:hover {
+        .fullscreen-button:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <!-- Slide Container -->
-    <div class="slide-container">
-        <div id="current-slide" class="slide">Slide Content Here</div>
-    </div>
-
-    <!-- Navigation Buttons -->
+    <!-- Full-Screen Button -->
     <div class="button-container">
-        <button class="nav-button" onclick="prevSlide()">Previous</button>
-        <button class="nav-button" onclick="nextSlide()">Next</button>
+        <button class="fullscreen-button" onclick="enterPresentationMode()">Enter Presentation Mode</button>
     </div>
 
-    <!-- JavaScript for Slide Navigation -->
+    <!-- Embedded Content -->
+    <iframe id="slides" src="https://gamma.app/embed/sghjimdt348aodp" allow="fullscreen" title="עולם הכלבים"></iframe>
+
+    <!-- JavaScript for Full-Screen Mode -->
     <script>
-        const slides = [
-            "Slide 1 Content",
-            "Slide 2 Content",
-            "Slide 3 Content"
-        ];
-        let currentSlideIndex = 0;
+        function enterPresentationMode() {
+            const iframe = document.getElementById('slides');
 
-        function showSlide(index) {
-            const slideContainer = document.getElementById('current-slide');
-            slideContainer.textContent = slides[index];
+            // Check if the browser supports the Fullscreen API
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) { // Firefox
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { // IE/Edge
+                iframe.msRequestFullscreen();
+            }
         }
-
-        function nextSlide() {
-            currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-            showSlide(currentSlideIndex);
-        }
-
-        function prevSlide() {
-            currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-            showSlide(currentSlideIndex);
-        }
-
-        // Show the first slide initially
-        showSlide(currentSlideIndex);
     </script>
 </body>
 </html>
