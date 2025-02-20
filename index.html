@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=24.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Full-Screen Slides</title>
     <style>
         body, html {
@@ -19,22 +19,52 @@
             height: 100%;
             border: none;
         }
+        .button-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+        .fullscreen-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .fullscreen-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    <!-- Full-Screen Button -->
+    <div class="button-container">
+        <button class="fullscreen-button" onclick="enterPresentationMode()">Enter Presentation Mode</button>
+    </div>
+
+    <!-- Embedded Content -->
     <iframe id="slides" src="https://gamma.app/embed/sghjimdt348aodp" allow="fullscreen" title="עולם הכלבים"></iframe>
 
+    <!-- JavaScript for Full-Screen Mode -->
     <script>
-        // Dynamically resize the iframe on window resize
-        function resizeIframe() {
+        function enterPresentationMode() {
             const iframe = document.getElementById('slides');
-            iframe.style.width = window.innerWidth + 'px';
-            iframe.style.height = window.innerHeight + 'px';
-        }
 
-        // Call the function on page load and window resize
-        window.addEventListener('resize', resizeIframe);
-        window.addEventListener('load', resizeIframe);
+            // Check if the browser supports the Fullscreen API
+            if (iframe.requestFullscreen) {
+                iframe.requestFullscreen();
+            } else if (iframe.mozRequestFullScreen) { // Firefox
+                iframe.mozRequestFullScreen();
+            } else if (iframe.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+                iframe.webkitRequestFullscreen();
+            } else if (iframe.msRequestFullscreen) { // IE/Edge
+                iframe.msRequestFullscreen();
+            }
+        }
     </script>
 </body>
 </html>
